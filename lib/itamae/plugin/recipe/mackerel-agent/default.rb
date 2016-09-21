@@ -5,6 +5,7 @@ node['mackerel-agent'] = {} unless node['mackerel-agent']
 node['mackerel-agent']['conf'] = node['mackerel-agent'].fetch('conf', {})
 node['mackerel-agent']['start_on_setup'] = node['mackerel-agent'].fetch('start_on_setup', true)
 node['mackerel-agent']['package-action'] = node['mackerel-agent'].fetch('package-action', :install)
+node['mackerel-agent']['plugins'] = node['mackerel-agent'].fetch('plugins', [])
 
 case node[:platform]
 when "debian", "ubuntu"
@@ -33,6 +34,12 @@ package "mackerel-agent" do
   action node['mackerel-agent']['package-action'].to_sym
   if node['mackerel-agent']['start_on_setup']
     notifies :restart, "service[mackerel-agent]"
+  end
+end
+
+node['mackerel-agent']['plugins'].each do |plugin|
+  package plugin do
+    action :install
   end
 end
 
