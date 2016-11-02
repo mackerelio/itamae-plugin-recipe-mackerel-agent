@@ -6,8 +6,8 @@ require 'itamae/plugin/recipe/mackerel-agent/version'
 Gem::Specification.new do |spec|
   spec.name          = "itamae-plugin-recipe-mackerel-agent"
   spec.version       = Itamae::Plugin::Recipe::Mackerel::Agent::VERSION
-  spec.authors       = ["Songmu"]
-  spec.email         = ["y.songmu@gmail.com"]
+  spec.authors       = ["mackerel"]
+  spec.email         = ["platform+mackerel@hatena.ne.jp"]
   spec.summary       = %q{Itamae mackerel-agent recipe plugin}
   spec.description   = %q{Itamae mackerel-agent recipe plugin}
   spec.homepage      = ""

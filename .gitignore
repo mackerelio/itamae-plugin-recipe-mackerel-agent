@@ -1,3 +1,5 @@
+.*
+!.gitignore
 /.bundle/
 /.yardoc
 /Gemfile.lock
