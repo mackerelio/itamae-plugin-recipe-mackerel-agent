@@ -3,6 +3,10 @@ require "toml"
 # set default attributes
 node['mackerel-agent'] = {} unless node['mackerel-agent']
 node['mackerel-agent']['conf'] = node['mackerel-agent'].fetch('conf', {})
+node['mackerel-agent']['conf']['apikey'] = node['mackerel-agent']['conf'].fetch('apikey', nil)
+node['mackerel-agent']['conf']['pidfile'] = node['mackerel-agent']['conf'].fetch('pidfile', "/var/run/mackerel-agent.pid")
+node['mackerel-agent']['conf']['root'] = node['mackerel-agent']['conf'].fetch('root', "/var/lib/mackerel-agent")
+node['mackerel-agent']['conf']['verbose'] = node['mackerel-agent']['conf'].fetch('verbose', false)
 node['mackerel-agent']['start_on_setup'] = node['mackerel-agent'].fetch('start_on_setup', true)
 node['mackerel-agent']['package-action'] = node['mackerel-agent'].fetch('package-action', :install)
 node['mackerel-agent']['plugins'] = node['mackerel-agent'].fetch('plugins', [])
