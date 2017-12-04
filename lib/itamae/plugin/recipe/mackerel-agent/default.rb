@@ -59,3 +59,13 @@ service "mackerel-agent" do
     action :enable
   end
 end
+
+node.validate! do
+  {
+    'mackerel-agent': {
+      'conf':{
+        'apikey': string,
+      }
+    }
+  }
+end
