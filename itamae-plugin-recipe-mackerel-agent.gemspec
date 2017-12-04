@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["platform+mackerel@hatena.ne.jp"]
   spec.summary       = %q{Itamae mackerel-agent recipe plugin}
   spec.description   = %q{Itamae mackerel-agent recipe plugin}
-  spec.homepage      = ""
+  spec.homepage      = 'https://github.com/mackerelio/itamae-plugin-recipe-mackerel-agent'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
