@@ -26,12 +26,6 @@ Load the recipe file in gems by `include_recipe`.
 
 ```ruby
 include_recipe "mackerel-agent"
-
-# Option for installation of mackerel-agent-plugins package
-package "mackerel-agent-plugins"
-
-# Option for installation of mackerel-check-plugins package
-package "mackerel-check-plugins"
 ```
 
 ## Attributes
@@ -43,7 +37,10 @@ node['mackerel-agent']['conf']['apikey'] = 'YOUR API KEY'
 # Roles (optional)
 node['mackerel-agent']['conf']['roles'] = ["My-Service:app", "Another-Service:db"]
 
-# Plugins (optional)
+# Install official plugins (optional)
+node['plugins'] = ['mackerel-agent-plugins', 'mackerel-check-plugins']
+
+# Enable plugins (optional)
 node['mackerel-agent']['conf']['plugin.metrics.vmstat'] = {
   'command' => 'ruby /etc/sensu/plugins/system/vmstat-metrics.rb',
 }
