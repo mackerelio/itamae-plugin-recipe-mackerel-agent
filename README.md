@@ -1,5 +1,7 @@
 # Itamae::Plugin::Recipe::Mackerel::Agent
 
+[![Gem Version](https://badge.fury.io/rb/itamae-plugin-recipe-mackerel-agent.svg)](https://badge.fury.io/rb/itamae-plugin-recipe-mackerel-agent)
+
 TODO: Write a gem description
 
 ## Installation
