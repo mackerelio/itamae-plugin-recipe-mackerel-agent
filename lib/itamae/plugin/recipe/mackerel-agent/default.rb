@@ -11,17 +11,17 @@ case node[:platform]
 when "debian", "ubuntu"
   remote_file "/etc/apt/sources.list.d/mackerel.list"
   execute "import mackerel GPG key" do
-    command "curl -fsS https://mackerel.io/assets/files/GPG-KEY-mackerel | apt-key add -"
+    command "curl -fsS https://mackerel.io/file/cert/GPG-KEY-mackerel | apt-key add -"
   end
   execute "apt-get update -qq"
 when "redhat", "fedora"
   execute "import mackerel GPG key" do
-    command "rpm --import https://mackerel.io/assets/files/GPG-KEY-mackerel"
+    command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel"
   end
   remote_file "/etc/yum.repos.d/mackerel.repo"
 when "amazon"
   execute "import mackerel GPG key" do
-    command "rpm --import https://mackerel.io/assets/files/GPG-KEY-mackerel"
+    command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel"
   end
   remote_file "/etc/yum.repos.d/mackerel.repo" do
     source "./files/etc/yum.repos.d/mackerel-amznlinux.repo"
