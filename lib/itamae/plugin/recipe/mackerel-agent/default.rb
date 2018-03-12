@@ -42,7 +42,7 @@ when "redhat", "fedora"
     remote_file "/etc/yum.repos.d/mackerel.repo"
   end
 when "amazon"
-  if platform_version_satisfy?('>~ 2.0')
+  if platform_version_satisfy?('~> 2.0')
     execute "import mackerel GPG key" do
       command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel-v2"
     end
