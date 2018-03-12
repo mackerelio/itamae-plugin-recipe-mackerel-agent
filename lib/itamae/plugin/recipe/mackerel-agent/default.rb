@@ -7,24 +7,55 @@ node['mackerel-agent']['start_on_setup'] = node['mackerel-agent'].fetch('start_o
 node['mackerel-agent']['package-action'] = node['mackerel-agent'].fetch('package-action', :install)
 node['mackerel-agent']['plugins'] = node['mackerel-agent'].fetch('plugins', [])
 
+def platform_version_satisfy?(op)
+  Gem::Requirement.create(op).satisfied_by?(Gem::Version.create(node[:platform_version]))
+end
+
 case node[:platform]
 when "debian", "ubuntu"
-  remote_file "/etc/apt/sources.list.d/mackerel.list"
-  execute "import mackerel GPG key" do
-    command "curl -fsS https://mackerel.io/file/cert/GPG-KEY-mackerel | apt-key add -"
+  if node[:platform] == "debian" and platform_version_satisfy?('>= 8') or node[:platform] == "ubuntu" and platform_version_satisfy?('>= 16.04')
+    execute "import mackerel GPG key v2" do
+      command "curl -fsS https://mackerel.io/file/cert/GPG-KEY-mackerel-v2 | apt-key add -"
+    end
+    remote_file "/etc/apt/sources.list.d/mackerel.list" do
+      source "./files/etc/apt/sources.list.d/mackerel-v2.list"
+    end
+  else
+    execute "import mackerel GPG key" do
+      command "curl -fsS https://mackerel.io/file/cert/GPG-KEY-mackerel | apt-key add -"
+    end
+    remote_file "/etc/apt/sources.list.d/mackerel.list"
   end
   execute "apt-get update -qq"
 when "redhat", "fedora"
-  execute "import mackerel GPG key" do
-    command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel"
+  if node[:platform] == "redhat" and platform_version_satisfy?('>= 7')
+    execute "import mackerel GPG key v2" do
+      command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel-v2"
+    end
+    remote_file "/etc/yum.repos.d/mackerel.repo" do
+      source "./files/etc/yum.repos.d/mackerel-v2.repo"
+    end
+  else
+    execute "import mackerel GPG key" do
+      command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel"
+    end
+    remote_file "/etc/yum.repos.d/mackerel.repo"
   end
-  remote_file "/etc/yum.repos.d/mackerel.repo"
 when "amazon"
-  execute "import mackerel GPG key" do
-    command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel"
-  end
-  remote_file "/etc/yum.repos.d/mackerel.repo" do
-    source "./files/etc/yum.repos.d/mackerel-amznlinux.repo"
+  if platform_version_satisfy?('>~ 2.0')
+    execute "import mackerel GPG key" do
+      command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel-v2"
+    end
+    remote_file "/etc/yum.repos.d/mackerel.repo" do
+      source "./files/etc/yum.repos.d/mackerel-amznlinux-v2.repo"
+    end
+  else
+    execute "import mackerel GPG key" do
+      command "rpm --import https://mackerel.io/file/cert/GPG-KEY-mackerel"
+    end
+    remote_file "/etc/yum.repos.d/mackerel.repo" do
+      source "./files/etc/yum.repos.d/mackerel-amznlinux.repo"
+    end
   end
 else
   raise "not supported this platform: " + node[:platform]
