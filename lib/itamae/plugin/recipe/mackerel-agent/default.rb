@@ -15,14 +15,14 @@ case node[:platform]
 when "debian", "ubuntu"
   if node[:platform] == "debian" and platform_version_satisfy?('>= 8') or node[:platform] == "ubuntu" and platform_version_satisfy?('>= 16.04')
     execute "import mackerel GPG key v2" do
-      command "curl -fsS https://mackerel.io/file/cert/GPG-KEY-mackerel-v2 | apt-key add -"
+      command "curl -fsSL https://mackerel.io/file/cert/GPG-KEY-mackerel-v2 | apt-key add -"
     end
     remote_file "/etc/apt/sources.list.d/mackerel.list" do
       source "./files/etc/apt/sources.list.d/mackerel-v2.list"
     end
   else
     execute "import mackerel GPG key" do
-      command "curl -fsS https://mackerel.io/file/cert/GPG-KEY-mackerel | apt-key add -"
+      command "curl -fsSL https://mackerel.io/file/cert/GPG-KEY-mackerel | apt-key add -"
     end
     remote_file "/etc/apt/sources.list.d/mackerel.list"
   end
