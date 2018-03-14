@@ -13,7 +13,7 @@ end
 
 case node[:platform]
 when "debian", "ubuntu"
-  if node[:platform] == "debian" and platform_version_satisfy?('>= 8') or node[:platform] == "ubuntu" and platform_version_satisfy?('>= 16.04')
+  if (node[:platform] == "debian" and platform_version_satisfy?('>= 8')) or (node[:platform] == "ubuntu" and platform_version_satisfy?('>= 16.04'))
     execute "import mackerel GPG key v2" do
       command "curl -fsSL https://mackerel.io/file/cert/GPG-KEY-mackerel-v2 | apt-key add -"
     end
