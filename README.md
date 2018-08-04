@@ -38,7 +38,7 @@ node['mackerel-agent']['conf']['apikey'] = 'YOUR API KEY'
 node['mackerel-agent']['conf']['roles'] = ["My-Service:app", "Another-Service:db"]
 
 # Install official plugins (optional)
-node['plugins'] = ['mackerel-agent-plugins', 'mackerel-check-plugins']
+node['mackerel-agent']['plugins'] = ['mackerel-agent-plugins', 'mackerel-check-plugins']
 
 # Enable plugins (optional)
 node['mackerel-agent']['conf']['plugin.metrics.vmstat'] = {
