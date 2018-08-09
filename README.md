@@ -41,7 +41,7 @@ node['mackerel-agent']['conf']['roles'] = ["My-Service:app", "Another-Service:db
 node['mackerel-agent']['plugins'] = ['mackerel-agent-plugins', 'mackerel-check-plugins', 'mkr']
 
 # Install third party plugins (optional)
-node['mackerel-agent']['third_party_plugins'] = [
+node['mackerel-agent']['extra_plugins'] = [
   {
     'name' => 'mackerelio/mackerel-plugin-aws-ecs',
     'version' => 'v0.0.4'
