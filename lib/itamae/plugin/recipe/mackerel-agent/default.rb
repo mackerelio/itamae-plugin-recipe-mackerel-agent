@@ -6,6 +6,7 @@ node['mackerel-agent']['conf'] = node['mackerel-agent'].fetch('conf', {})
 node['mackerel-agent']['start_on_setup'] = node['mackerel-agent'].fetch('start_on_setup', true)
 node['mackerel-agent']['package-action'] = node['mackerel-agent'].fetch('package-action', :install)
 node['mackerel-agent']['plugins'] = node['mackerel-agent'].fetch('plugins', [])
+node['mackerel-agent']['extra_plugins'] = node['mackerel-agent'].fetch('extra_plugins', [])
 
 def platform_version_satisfy?(op)
   Gem::Requirement.create(op).satisfied_by?(Gem::Version.create(node[:platform_version]))
@@ -71,6 +72,12 @@ end
 node['mackerel-agent']['plugins'].each do |plugin|
   package plugin do
     action :install
+  end
+end
+
+node['mackerel-agent']['extra_plugins'].each do |extra_plugin|
+  execute "mkr plugin install #{extra_plugin['name']}" do
+    command "mkr plugin install --upgrade #{extra_plugin['name']}@#{extra_plugin['version']}"
   end
 end
 
