@@ -3,6 +3,10 @@ mackerel-agent recipe CHANGELOG
 
 This file is used to list changes made in each version of the mackerel-agent recipe.
 
+v0.1.0
+------
+- Support third party plugin install #15 (by holidayworking)
+
 v0.0.3
 ------
 - Support v2 packages #9 (by hayajo)
